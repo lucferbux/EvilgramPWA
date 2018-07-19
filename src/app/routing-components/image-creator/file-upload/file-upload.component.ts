@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { finalize } from 'rxjs/operators';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ImageCropperComponent, CropperSettings } from 'ngx-img-cropper';
+
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { ImageSharingService } from './image-sharing.service'
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
@@ -152,70 +152,29 @@ export class FileUploadComponent implements ControlValueAccessor { //ControlValu
 })
 export class ImageEditComponentSheet {
   dataPhoto: any;
-  cropperSettings: CropperSettings;
   image: any;
+  cropperReady = false;
 
-  @ViewChild('cropper', undefined)
-  cropper: ImageCropperComponent;
 
   constructor(public bottomSheetRef: MatBottomSheetRef<ImageEditComponentSheet>, private sharingImage: ImageSharingService, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = data.width;
-    this.cropperSettings.height = data.height;
-    this.cropperSettings.croppedWidth = data.width;
-    this.cropperSettings.croppedHeight = data.height;
-    this.cropperSettings.canvasWidth = 400;
-    this.cropperSettings.canvasHeight = 400;
-    this.cropperSettings.noFileInput = true;
-    this.cropperSettings.compressRatio = 1;
+    this.image = this.sharingImage.image;
+  }
 
-    this.dataPhoto = {};
+  imageCroppedFile(file: any) {
+    this.dataPhoto = file;
+  }
 
-    this.image = new Image();
-
-    var file: File = this.sharingImage.image;
-    var myReader: FileReader = new FileReader();
-    var that = this;
-
-
-    myReader.onloadend = function (loadEvent: any) {
-      that.image.src = loadEvent.target.result;
-      that.cropper.setImage(that.image);
-    };
-
-    myReader.readAsDataURL(file);
+  imageLoaded() {
+    this.cropperReady = true;
+  }
+  imageLoadFailed() {
+    console.log('Load failed');
   }
 
   uploadTrimmedImage() {
-    console.log("Imprimiendo data");
-
-    var fileUpload = this.base64ToFile(this.dataPhoto.image, "image.png", "image/png")
-    this.sharingImage.imageSelected.emit(fileUpload);
+    this.sharingImage.imageSelected.emit(this.dataPhoto);
     this.bottomSheetRef.dismiss();
   }
-
-  base64ToFile(base64Data, tempfilename, contentType) {
-    contentType = contentType || '';
-    const base64RealData = base64Data.split("base64,")
-    const sliceSize = 1024;
-    const byteCharacters = atob(base64RealData[1]);
-    const bytesLength = byteCharacters.length;
-    const slicesCount = Math.ceil(bytesLength / sliceSize);
-    const byteArrays = new Array(slicesCount);
-
-    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-      const begin = sliceIndex * sliceSize;
-      const end = Math.min(begin + sliceSize, bytesLength);
-
-      const bytes = new Array(end - begin);
-      for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-        bytes[i] = byteCharacters[offset].charCodeAt(0);
-      }
-      byteArrays[sliceIndex] = new Uint8Array(bytes);
-    }
-    return new File(byteArrays, tempfilename, { type: contentType });
-  }
-
 
 
 }

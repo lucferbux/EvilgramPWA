@@ -1,10 +1,14 @@
 <div class="sheet-list">
-        <img-cropper class="image-cropper" #cropper [image]="dataPhoto" [settings]="cropperSettings"></img-cropper>
-        <!-- <br>
-        <span class="result rounded" *ngIf="data.image" >
-            <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
-        </span>    -->
-        
+        <image-cropper
+        [imageFileChanged]="image"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="data.width / data.height"
+        [resizeToWidth]="data.width"
+        format="png"
+        (imageCroppedFile)="imageCroppedFile($event)"
+        (imageLoaded)="imageLoaded()"
+        [style.display]="cropperReady ? null : 'none'"
+        ></image-cropper>
         
         
         <button class="button-sheet" color="primary" mat-raised-button (click)="uploadTrimmedImage()">

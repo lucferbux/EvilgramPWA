@@ -9,7 +9,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { CoreModule } from './core/core.module';
-import { ImageCropperModule } from 'ngx-img-cropper';
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { environment } from '../environments/environment';
@@ -123,11 +124,11 @@ import { DropZoneDirective } from './routing-components/image-creator/file-uploa
     AngularFireDatabaseModule,
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    ImageCropperModule,
     FormsModule,
     CoreModule, 
     ReactiveFormsModule,
     AngularFireStorageModule, 
+    ImageCropperModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
