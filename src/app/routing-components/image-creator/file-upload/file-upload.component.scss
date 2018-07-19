@@ -1,0 +1,43 @@
+@import '~@angular/material/theming';
+@import '../../../../app-custom-theme.scss';
+
+.dropzone { 
+
+    &.hovering {
+        background-color: mat-color($accent) !important;
+        color: #ffffff;
+    }
+
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+
+.header-image {
+    height: 100px;
+    width: 100px
+ }
+
+ .sheet-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-cropper{
+    //width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-sheet {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.intro-image {
+    object-fit: cover;
+    height: 280px; 
+}

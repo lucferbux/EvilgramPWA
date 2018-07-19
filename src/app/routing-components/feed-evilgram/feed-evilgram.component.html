@@ -1,0 +1,29 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Feed</h1>
+  <mat-grid-list cols="{{(isHandset | async)!.matches ? 1 : 2}}" rowHeight="{{(isHandset | async)!.matches ? '500px' : '900px'}}">
+    <mat-grid-tile *ngFor="let post of posts" [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <img mat-card-avatar class="post-header-image" src="https://firebasestorage.googleapis.com/v0/b/evil-gram.appspot.com/o/IMG_0367.jpg?alt=media&token=900aee30-716d-4972-8c85-19dfae7afc4f">
+          <mat-card-title>{{post.title}}</mat-card-title>
+          <mat-card-subtitle>{{post.timestamp.toDate()  | date:'dd-MM-yyyy HH:mm:ss' }}</mat-card-subtitle>
+          <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu" *ngIf="auth.user | async">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <!-- <button mat-menu-item (click)="editTeam(card)">Edit</button> -->
+            <button mat-menu-item (click)="removePost(post)" class="mat-menu-delete">Remove</button>
+          </mat-menu>
+        </mat-card-header>
+        <mat-divider>
+        </mat-divider>
+        <img mat-card-image *ngIf="post.image" src={{post.image}} layout-fill>
+        <mat-card-content class="dashboard-card-content">
+          <div>
+            <p>{{ post.description }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

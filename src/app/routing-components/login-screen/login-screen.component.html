@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-content>
+    <mat-card-header>
+      <mat-card-title>Feed Updater</mat-card-title>
+      <mat-card-subtitle>Inicia sesión para entrar en modo en Feed Updater...</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider>
+    </mat-divider>
+    <br>
+
+    <div *ngIf="auth.user | async; then authenticated else guest"></div>
+    <!-- User NOT logged in -->
+    <ng-template #guest>
+      <form [formGroup]="userForm" class="form-container" (ngSubmit)="submitHandler()">
+
+        <mat-form-field hintLabel="Formato Correo Electrónico">
+          <input matInput #input placeholder="Correo Electrónico" formControlName="email">
+          <mat-hint align="end">{{input.value?.length || 0}}</mat-hint>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field hintLabel="Contraseña de adminsitrador">
+          <input matInput type="password" #input placeholder="Contraseña" formControlName="password">
+          <mat-hint align="end">{{input.value?.length || 0}}</mat-hint>
+        </mat-form-field>
+        <br>
+
+        <br>
+        <div class="create-div">
+          <button mat-raised-button color="primary" class="button-form" type="submit" [disabled]="userForm.invalid">Iniciar Sesión</button>
+        </div>
+      </form>
+
+      <!--       <button mat-raised-button color="primary" (click)="auth.googleLogin()">
+        Connect with Google
+      </button> -->
+    </ng-template>
+
+
+    <!-- User logged in -->
+    <ng-template #authenticated>
+      <div *ngIf="auth.user | async as user">
+        <p>Hola, {{ user.email }}</p>
+        <button mat-raised-button color="warn" (click)="auth.signOut()">
+          Logout
+        </button>
+      </div>
+    </ng-template>
+
+  </mat-card-content>
+
+</mat-card>

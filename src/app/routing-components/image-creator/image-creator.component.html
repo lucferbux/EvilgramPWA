@@ -1,0 +1,35 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Añadir Canciones</h1>
+
+
+  <form [formGroup]="postForm" class="form-container" (ngSubmit)="submitHandlerPost()">
+    <br>
+    <app-file-upload contenteditable="true" formControlName="image" [folder]="folderName" [filename]="fileName" [title]="titleDropdown"
+        [subtitle]="subtitleDropdown" [widthCrop]=1920 [heightCrop]=1920 [avatarImage]=false [imageTitle]="imageTitleDropdown" [imageSubtitle]="imageSubtitleDropdown"> </app-file-upload>
+    <br>
+
+
+    <mat-form-field hintLabel="Max. 30 Caracteres">
+      <input matInput #inputtitle placeholder="Título" formControlName="title">
+      <mat-hint align="end">{{inputtitle.value?.length || 0}}/30</mat-hint>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field hintLabel="No hay limites">
+      <textarea matInput #inputdesc placeholder="Descripción" formControlName="description"></textarea>
+      <mat-hint align="end">{{inputdesc.value?.length || 0}}</mat-hint>
+    </mat-form-field>
+    <br>
+
+
+    <div class="create-div">
+      <mat-spinner *ngIf="loading" [diameter]="30" class="spinner-form"></mat-spinner>
+
+      <button mat-raised-button color="primary" class="button-form" type="submit" [disabled]="postForm.invalid">Crear</button>
+
+    </div>
+
+
+  </form>
+
+</div>

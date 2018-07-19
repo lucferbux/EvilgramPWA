@@ -1,0 +1,44 @@
+<mat-card appDropZone class="dropzone" (hovered)="toggleHover($event)" (dropped)="fileChangeListener($event)" [class.hovering]="isHovering">
+    <mat-card-header *ngIf="downloadURL | async as url">
+        <img mat-card-avatar *ngIf="avatarImage" class="header-image" src={{url}}>
+        <mat-card-title>{{ imageTitle }}</mat-card-title>
+        <mat-card-subtitle>{{ imageSubtitle }}</mat-card-subtitle>
+    </mat-card-header>
+
+
+
+    <br *ngIf="downloadURL | async as url">
+    <mat-divider *ngIf="downloadURL | async as url">
+    </mat-divider>
+
+    <div *ngIf="!avatarImage">
+        <img matCardImage *ngIf="downloadURL | async as url" class="intro-image" src={{url}}>
+    </div>
+    
+
+    <mat-card-content>
+        <h2 class="mat-h2">{{title}}</h2>
+        <p>{{subtitle}}</p>
+
+        <button mat-raised-button type="button" color="primary" (click)="imageUpload.click()">
+            <mat-icon>library_add</mat-icon>
+            <span>Select Image</span>
+        </button>
+
+        <input hidden #imageUpload class="file-input" type="file" (change)="fileChangeListener($event.target.files)">
+
+
+        <br>
+
+        <div *ngIf="percentage | async as pct">
+            <mat-progress-bar mode="determinate" [value]="pct">
+            </mat-progress-bar>
+        </div>
+
+        <br>
+
+        <button *ngIf="(snapshot | async) as snap" (click)="task.cancel()" [disabled]="!isActive(snap)" mat-raised-button color="accent">Cancel</button>
+
+        <br>
+    </mat-card-content>
+</mat-card>

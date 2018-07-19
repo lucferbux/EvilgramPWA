@@ -1,0 +1,28 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+
+  .button-form {
+      width: 150px;
+  }
+
+  .spinner-form {
+    margin-right: 30px
+  }
+
+.create-div{
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end;
+
+}
+
+.grid-container {
+    margin: 20px;
+}

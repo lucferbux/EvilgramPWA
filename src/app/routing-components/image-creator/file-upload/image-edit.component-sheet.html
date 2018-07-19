@@ -1,0 +1,20 @@
+<div class="sheet-list">
+        <img-cropper class="image-cropper" #cropper [image]="dataPhoto" [settings]="cropperSettings"></img-cropper>
+        <!-- <br>
+        <span class="result rounded" *ngIf="data.image" >
+            <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+        </span>    -->
+        
+        
+        
+        <button class="button-sheet" color="primary" mat-raised-button (click)="uploadTrimmedImage()">
+                <mat-icon>backup</mat-icon>
+                <span>Upload Image</span>
+        </button>
+        
+        <button class="button-sheet" color="warn" mat-raised-button (click)="bottomSheetRef.dismiss()">
+                <mat-icon>clear</mat-icon>
+                <span>Cancel</span>
+        </button>
+</div>
+
